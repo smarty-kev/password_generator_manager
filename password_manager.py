@@ -13,8 +13,7 @@ class PasswordManager:
     @staticmethod
     def create_local_account():
         print("Welcome Newcomer!\nPlease create an account below.")
-        username = input("Username : ")
-        password = input("Password : ")
+        username = input("Username : "); password = input("Password : ")
         print(f"Your username is |{username}| and your password is |{password}|. Do not forget it.")
         x = open("credentials.txt", "w")
         x.write(username); x.write("\n"); x.write(password)
@@ -22,15 +21,16 @@ class PasswordManager:
         return "Successful Account Creation"
 
     def login(self):
-        print("Please login:")
+        print("Please login")
         file = open("credentials.txt", "r")
-        creds = file.readlines()
-        input_username = input("Username : ")
-        input_password = input("Password : ")
-        if creds[0] == input_username and creds[1] == input_password:
+        creds = file.readlines()  # line 1 = username, line 2 = password
+        input_username = input("Username : "); input_password = input("Password : ")
+        if creds[0].rstrip() == input_username and creds[1].rstrip() == input_password:
             self.login_state = "Logged in"
             print("Successful Login")
             print(f"Welcome back {creds[0]}!")
+        else:
+            print("Wrong credentials please try again.")
 
 
 class PasswordWriter:
@@ -77,7 +77,7 @@ if __name__ == "__main__":
     if not os.path.exists("credentials.txt"):
         print(pwd_manager.create_local_account())
 
-    if pwd_manager.login_state != "Logged in":
+    while pwd_manager.login_state != "Logged in":
         pwd_manager.login()
     # testing
     # print(pwd_reader.read_password_file())
